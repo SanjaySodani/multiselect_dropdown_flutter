@@ -16,7 +16,7 @@ and the Flutter guide for
 
 ## Features
 
-https://user-images.githubusercontent.com/88200484/219946035-d5dc8d82-eb14-43d5-a56d-fe217b25764d.mov
+![MultiSelect Dropdown demo](https://github.com/SanjaySodani/media/blob/main/multiselect_dropdown_flutter.gif "Demo")
 
 * Use `MultiSelectDropdown` for list of maps.
 * Use `MultiSelectDropdown.simpleList` for a simple list.
