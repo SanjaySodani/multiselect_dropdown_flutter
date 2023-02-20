@@ -68,6 +68,9 @@ class MultiSelectDropdown extends StatefulWidget {
   /// Includes a search option when `true`
   final bool includeSearch;
 
+  /// `TextStyle?` for the text on anchor element
+  final TextStyle textStyle;
+
   /// Mutiple selection dropdown for List of Maps.
   MultiSelectDropdown({
     super.key,
@@ -83,6 +86,7 @@ class MultiSelectDropdown extends StatefulWidget {
     this.isLarge = false,
     this.includeSelectAll = false,
     this.includeSearch = false,
+    this.textStyle = const TextStyle(fontSize: 15),
   })  : selected = [...initiallySelected],
         isSimpleList = false,
         boxDecoration = decoration ??
@@ -104,6 +108,7 @@ class MultiSelectDropdown extends StatefulWidget {
     this.isLarge = false,
     this.includeSelectAll = false,
     this.includeSearch = false,
+    this.textStyle = const TextStyle(fontSize: 15),
   })  : selected = [...initiallySelected],
         label = '',
         id = '',
@@ -371,7 +376,7 @@ class _MultiSelectDropdownState extends State<MultiSelectDropdown> {
                   }
                 },
                 child: Container(
-                  padding: const EdgeInsets.all(12),
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
                   decoration: widget.boxDecoration,
                   width: modalWidth,
                   child: Row(
@@ -379,7 +384,7 @@ class _MultiSelectDropdownState extends State<MultiSelectDropdown> {
                       Expanded(
                         child: Text(
                           textToShow,
-                          style: const TextStyle(fontSize: 15),
+                          style: widget.textStyle,
                           overflow: TextOverflow.fade,
                           softWrap: false,
                         ),
