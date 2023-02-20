@@ -1,5 +1,8 @@
+# 0.0.4
+* [Added] `duration` parameter for debounce in search option
+
 ## 0.0.3
-* Added textStyle parameter for the anchor element
+* [Added] `textStyle` parameter for the anchor element
 
 ## 0.0.2
 * Updated README.md file

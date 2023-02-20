@@ -71,6 +71,10 @@ class MultiSelectDropdown extends StatefulWidget {
   /// `TextStyle?` for the text on anchor element
   final TextStyle textStyle;
 
+  /// `Duration?` for debounce in search option.
+  /// Defaults to 300 milliseconds.
+  final Duration duration;
+
   /// Mutiple selection dropdown for List of Maps.
   MultiSelectDropdown({
     super.key,
@@ -87,6 +91,7 @@ class MultiSelectDropdown extends StatefulWidget {
     this.includeSelectAll = false,
     this.includeSearch = false,
     this.textStyle = const TextStyle(fontSize: 15),
+    this.duration = const Duration(milliseconds: 300),
   })  : selected = [...initiallySelected],
         isSimpleList = false,
         boxDecoration = decoration ??
@@ -109,6 +114,7 @@ class MultiSelectDropdown extends StatefulWidget {
     this.includeSelectAll = false,
     this.includeSearch = false,
     this.textStyle = const TextStyle(fontSize: 15),
+    this.duration = const Duration(milliseconds: 300),
   })  : selected = [...initiallySelected],
         label = '',
         id = '',
@@ -192,7 +198,7 @@ class _MultiSelectDropdownState extends State<MultiSelectDropdown> {
   void onSearchTextChanged(String searchText) {
     if (debounce?.isActive ?? false) debounce?.cancel();
 
-    debounce = Timer(const Duration(milliseconds: 300), () {
+    debounce = Timer(widget.duration, () {
       if (searchText.isEmpty) {
         setState(() {
           filteredOptions = widget.list;
