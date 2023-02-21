@@ -31,14 +31,14 @@ class MultiSelectDropdown extends StatefulWidget {
   /// }
   /// ```
   /// {@end-tool}
-  final Function onChange;
+  final ValueChanged<List> onChange;
 
   /// Number of items to show as text,
   /// beyond that it will show `n` selected
   final int numberOfItemsLabelToShow;
 
   /// Initially selected list
-  final List selected;
+  final List initiallySelected;
 
   /// Decoration for input element
   final Decoration? boxDecoration;
@@ -76,15 +76,15 @@ class MultiSelectDropdown extends StatefulWidget {
   final Duration duration;
 
   /// Mutiple selection dropdown for List of Maps.
-  MultiSelectDropdown({
+  const MultiSelectDropdown({
     super.key,
     required this.list,
-    required initiallySelected,
+    required this.initiallySelected,
     this.label = 'label',
     this.id = 'id',
     required this.onChange,
     this.numberOfItemsLabelToShow = 3,
-    Decoration? decoration,
+    this.boxDecoration,
     this.width,
     this.whenEmpty = 'Select options',
     this.isLarge = false,
@@ -92,22 +92,16 @@ class MultiSelectDropdown extends StatefulWidget {
     this.includeSearch = false,
     this.textStyle = const TextStyle(fontSize: 15),
     this.duration = const Duration(milliseconds: 300),
-  })  : selected = [...initiallySelected],
-        isSimpleList = false,
-        boxDecoration = decoration ??
-            BoxDecoration(
-              border: Border.all(color: Colors.grey),
-              borderRadius: BorderRadius.circular(5),
-            );
+  }) : isSimpleList = false;
 
   /// Mutiple selection dropdown for simple List.
-  MultiSelectDropdown.simpleList({
+  const MultiSelectDropdown.simpleList({
     super.key,
     required this.list,
-    required initiallySelected,
+    required this.initiallySelected,
     required this.onChange,
     this.numberOfItemsLabelToShow = 3,
-    Decoration? decoration,
+    this.boxDecoration,
     this.width,
     this.whenEmpty = 'Select options',
     this.isLarge = false,
@@ -115,21 +109,17 @@ class MultiSelectDropdown extends StatefulWidget {
     this.includeSearch = false,
     this.textStyle = const TextStyle(fontSize: 15),
     this.duration = const Duration(milliseconds: 300),
-  })  : selected = [...initiallySelected],
-        label = '',
+  })  : label = '',
         id = '',
-        isSimpleList = true,
-        boxDecoration = decoration ??
-            BoxDecoration(
-              border: Border.all(color: Colors.grey),
-              borderRadius: BorderRadius.circular(5),
-            );
+        isSimpleList = true;
 
   @override
   State<MultiSelectDropdown> createState() => _MultiSelectDropdownState();
 }
 
 class _MultiSelectDropdownState extends State<MultiSelectDropdown> {
+  late List selected = [...widget.initiallySelected];
+  late final Decoration boxDecoration;
   List filteredOptions = [];
 
   late final TextEditingController filterController;
@@ -137,9 +127,9 @@ class _MultiSelectDropdownState extends State<MultiSelectDropdown> {
 
   bool isSelected(data) {
     if (widget.isSimpleList) {
-      return widget.selected.contains(data);
+      return selected.contains(data);
     } else {
-      for (Map obj in widget.selected) {
+      for (Map obj in selected) {
         if (obj[widget.id] == data) {
           return true;
         }
@@ -151,28 +141,28 @@ class _MultiSelectDropdownState extends State<MultiSelectDropdown> {
   void handleOnChange(bool newValue, dynamic data) {
     if (newValue) {
       setState(() {
-        widget.selected.add(data);
+        selected.add(data);
       });
     } else {
       if (widget.isSimpleList) {
         setState(() {
-          widget.selected.remove(data);
+          selected.remove(data);
         });
       } else {
-        int itemIndex = widget.selected.indexWhere(
+        int itemIndex = selected.indexWhere(
           (obj) => obj[widget.id] == data[widget.id],
         );
         if (itemIndex == -1) {
           return;
         } else {
           setState(() {
-            widget.selected.removeAt(itemIndex);
+            selected.removeAt(itemIndex);
           });
         }
       }
     }
 
-    widget.onChange(widget.selected);
+    widget.onChange(selected);
   }
 
   Widget buildTile(data) {
@@ -250,13 +240,13 @@ class _MultiSelectDropdownState extends State<MultiSelectDropdown> {
   Widget buildSelectAllButton() {
     return InkWell(
       onTap: () {
-        if (widget.selected.length == widget.list.length) {
-          widget.selected.clear();
+        if (selected.length == widget.list.length) {
+          selected.clear();
         } else {
-          widget.selected.clear();
-          widget.selected.addAll(widget.list);
+          selected.clear();
+          selected = [...widget.list];
         }
-        widget.onChange(widget.selected);
+        widget.onChange(selected);
         setState(() {});
       },
       child: Container(
@@ -309,26 +299,26 @@ class _MultiSelectDropdownState extends State<MultiSelectDropdown> {
   }
 
   String buildText() {
-    if (widget.selected.isEmpty) {
+    if (selected.isEmpty) {
       return widget.whenEmpty;
     }
 
-    if (widget.numberOfItemsLabelToShow < widget.selected.length) {
-      return '${widget.selected.length} selected';
+    if (widget.numberOfItemsLabelToShow < selected.length) {
+      return '${selected.length} selected';
     }
 
     if (widget.isSimpleList) {
-      final int itemsToShow = widget.selected.length;
+      final int itemsToShow = selected.length;
       String finalString = "";
       for (int i = 0; i < itemsToShow; i++) {
-        finalString = '$finalString ${widget.selected[i]}, ';
+        finalString = '$finalString ${selected[i]}, ';
       }
       return finalString.substring(0, finalString.length - 2);
     } else {
-      final int itemsToShow = widget.selected.length;
+      final int itemsToShow = selected.length;
       String finalString = "";
       for (int i = 0; i < itemsToShow; i++) {
-        finalString = '$finalString ${widget.selected[i][widget.label]}, ';
+        finalString = '$finalString ${selected[i][widget.label]}, ';
       }
       return finalString.substring(0, finalString.length - 2);
     }
@@ -338,7 +328,12 @@ class _MultiSelectDropdownState extends State<MultiSelectDropdown> {
   void initState() {
     super.initState();
     filterController = TextEditingController();
-    filteredOptions = widget.list;
+    filteredOptions = [...widget.list];
+    boxDecoration = widget.boxDecoration ??
+        BoxDecoration(
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.circular(5),
+        );
   }
 
   @override
@@ -383,7 +378,7 @@ class _MultiSelectDropdownState extends State<MultiSelectDropdown> {
                 },
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 12),
-                  decoration: widget.boxDecoration,
+                  decoration: boxDecoration,
                   width: modalWidth,
                   child: Row(
                     children: [

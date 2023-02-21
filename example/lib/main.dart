@@ -68,7 +68,7 @@ class MultiSelectExample extends StatelessWidget {
               isLarge: true, // Modal size will be a little large
               // Give a definite width when rendering this widget in a row
               width: 150, // Must be a definite number
-              decoration: BoxDecoration(
+              boxDecoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
               ),
             ),
