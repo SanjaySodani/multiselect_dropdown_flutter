@@ -88,6 +88,12 @@ class MultiSelectExample extends StatelessWidget {
 | includeSearch | Includes a search option when `true` |
 | textStyle | `TextStyle?` for the text on anchor element |
 | duration | `Duration?` for debounce in search option. Defaults to 300 milliseconds. |
+| checkboxFillColor | checkbox fill color |
+| splashColor | splash color on list tile |
+| listTextStyle | text style for text on list tile |
 
+\
+&nbsp;
 
 > I will keep adding more functionalities.
+> You can raise an issue/feature request on github.

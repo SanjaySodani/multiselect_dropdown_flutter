@@ -68,12 +68,21 @@ class MultiSelectDropdown extends StatefulWidget {
   /// Includes a search option when `true`
   final bool includeSearch;
 
-  /// `TextStyle?` for the text on anchor element
+  /// `TextStyle?` for the text on anchor element.
   final TextStyle textStyle;
 
   /// `Duration?` for debounce in search option.
   /// Defaults to 300 milliseconds.
   final Duration duration;
+
+  /// Checkbox fill color in list tile.
+  final Color? checkboxFillColor;
+
+  /// Splash color on the list tile when the list is clicked.
+  final Color? splashColor;
+
+  /// TextStyle for the text on list tile.
+  final TextStyle? listTextStyle;
 
   /// Mutiple selection dropdown for List of Maps.
   const MultiSelectDropdown({
@@ -92,6 +101,9 @@ class MultiSelectDropdown extends StatefulWidget {
     this.includeSearch = false,
     this.textStyle = const TextStyle(fontSize: 15),
     this.duration = const Duration(milliseconds: 300),
+    this.checkboxFillColor,
+    this.splashColor,
+    this.listTextStyle,
   }) : isSimpleList = false;
 
   /// Mutiple selection dropdown for simple List.
@@ -109,6 +121,9 @@ class MultiSelectDropdown extends StatefulWidget {
     this.includeSearch = false,
     this.textStyle = const TextStyle(fontSize: 15),
     this.duration = const Duration(milliseconds: 300),
+    this.checkboxFillColor,
+    this.splashColor,
+    this.listTextStyle,
   })  : label = '',
         id = '',
         isSimpleList = true;
@@ -173,6 +188,9 @@ class _MultiSelectDropdownState extends State<MultiSelectDropdown> {
           handleOnChange(newValue, data);
         },
         title: '$data',
+        checkboxFillColor: widget.checkboxFillColor,
+        splashColor: widget.splashColor,
+        textStyle: widget.listTextStyle,
       );
     } else {
       return _CustomTile(
@@ -181,6 +199,9 @@ class _MultiSelectDropdownState extends State<MultiSelectDropdown> {
           handleOnChange(newValue, data);
         },
         title: '${data[widget.label]}',
+        checkboxFillColor: widget.checkboxFillColor,
+        splashColor: widget.splashColor,
+        textStyle: widget.listTextStyle,
       );
     }
   }
@@ -410,16 +431,24 @@ class _MultiSelectDropdownState extends State<MultiSelectDropdown> {
   }
 }
 
+// Simple list tiles in the modal
 class _CustomTile extends StatelessWidget {
   const _CustomTile({
     required this.title,
     required this.value,
     required this.onChanged,
+    this.checkboxFillColor,
+    this.splashColor,
+    this.textStyle,
   });
 
   final String title;
   final bool value;
   final ValueChanged<bool> onChanged;
+
+  final Color? checkboxFillColor;
+  final Color? splashColor;
+  final TextStyle? textStyle;
 
   void handleOnChange() {
     if (value) {
@@ -433,7 +462,7 @@ class _CustomTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
     return InkWell(
-      splashColor: themeData.primaryColor,
+      splashColor: splashColor ?? themeData.primaryColor,
       hoverColor: Colors.black12,
       onTap: handleOnChange,
       child: SizedBox(
@@ -443,14 +472,17 @@ class _CustomTile extends StatelessWidget {
             const SizedBox(width: 6),
             Checkbox(
               fillColor: MaterialStateProperty.resolveWith<Color>((states) {
-                return themeData.primaryColor;
+                return checkboxFillColor ?? themeData.primaryColor;
               }),
               value: value,
               onChanged: null,
             ),
             const SizedBox(width: 5),
             Expanded(
-              child: Text(title),
+              child: Text(
+                title,
+                style: textStyle,
+              ),
             ),
           ],
         ),
