@@ -1,6 +1,6 @@
 name: multiselect_dropdown_flutter
 description: A simple multiselect dropdown with select all and search options. Works with a simple list and a list of maps.
-version: 0.0.6
+version: 0.0.7
 repository: https://github.com/SanjaySodani/multiselect_dropdown_flutter
 issue_tracker: https://github.com/SanjaySodani/multiselect_dropdown_flutter/issues
 

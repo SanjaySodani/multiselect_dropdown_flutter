@@ -95,5 +95,4 @@ class MultiSelectExample extends StatelessWidget {
 \
 &nbsp;
 
-> I will keep adding more functionalities.
-> You can raise an issue/feature request on github.
+> I will keep adding more functionalities.<br>You can raise an issue/feature request on github.<br> Please leave a like if you find this package useful.

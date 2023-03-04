@@ -1,3 +1,6 @@
+# 0.0.7
+- [Added] `padding` for the anchor element
+
 # 0.0.6
 - Cosmetic changes
 - [Added] `checkboxFillColor` checkbox fill color
@@ -6,7 +9,7 @@
 
 # 0.0.5
 - Optimization
-- [Added] All parameters in readme.
+- [Added] All parameters in readme
 
 # 0.0.4
 - [Added] `duration` parameter for debounce in search option
@@ -18,4 +21,4 @@
 - Updated README.md file
 
 # 0.0.1
-- Initial development release.
+- Initial development release
