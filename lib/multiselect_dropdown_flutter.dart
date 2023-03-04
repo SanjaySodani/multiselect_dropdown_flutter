@@ -84,6 +84,9 @@ class MultiSelectDropdown extends StatefulWidget {
   /// TextStyle for the text on list tile.
   final TextStyle? listTextStyle;
 
+  /// Padding for the input element.
+  final EdgeInsets? padding;
+
   /// Mutiple selection dropdown for List of Maps.
   const MultiSelectDropdown({
     super.key,
@@ -104,6 +107,7 @@ class MultiSelectDropdown extends StatefulWidget {
     this.checkboxFillColor,
     this.splashColor,
     this.listTextStyle,
+    this.padding,
   }) : isSimpleList = false;
 
   /// Mutiple selection dropdown for simple List.
@@ -124,6 +128,7 @@ class MultiSelectDropdown extends StatefulWidget {
     this.checkboxFillColor,
     this.splashColor,
     this.listTextStyle,
+    this.padding,
   })  : label = '',
         id = '',
         isSimpleList = true;
@@ -398,7 +403,8 @@ class _MultiSelectDropdownState extends State<MultiSelectDropdown> {
                   }
                 },
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  padding: widget.padding ??
+                      const EdgeInsets.symmetric(horizontal: 12),
                   decoration: boxDecoration,
                   width: modalWidth,
                   child: Row(
