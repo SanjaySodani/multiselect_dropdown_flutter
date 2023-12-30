@@ -18,7 +18,7 @@ class MultiSelectDropdown extends StatefulWidget {
   /// `id` key in a Map to identify an item. Defaults to 'id'
   final String id;
 
-  /// `onChange` callback, called everytime when
+  /// `onChange` callback, called every time when
   /// an item is added or removed with the new
   /// list as argument
   ///
@@ -87,7 +87,7 @@ class MultiSelectDropdown extends StatefulWidget {
   /// Padding for the input element.
   final EdgeInsets? padding;
 
-  /// Mutiple selection dropdown for List of Maps.
+  /// Multiple selection dropdown for List of Maps.
   const MultiSelectDropdown({
     super.key,
     required this.list,
@@ -110,7 +110,7 @@ class MultiSelectDropdown extends StatefulWidget {
     this.padding,
   }) : isSimpleList = false;
 
-  /// Mutiple selection dropdown for simple List.
+  /// Multiple selection dropdown for simple List.
   const MultiSelectDropdown.simpleList({
     super.key,
     required this.list,
