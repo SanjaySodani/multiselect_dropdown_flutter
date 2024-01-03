@@ -18,7 +18,7 @@ class MultiSelectDropdown extends StatefulWidget {
   /// `id` key in a Map to identify an item. Defaults to 'id'
   final String id;
 
-  /// `onChange` callback, called everytime when
+  /// `onChange` callback, called every time when
   /// an item is added or removed with the new
   /// list as argument
   ///
@@ -81,13 +81,16 @@ class MultiSelectDropdown extends StatefulWidget {
   /// Splash color on the list tile when the list is clicked.
   final Color? splashColor;
 
+  // Dropdown background color
+  final Color? backgroundColor;
+
   /// TextStyle for the text on list tile.
   final TextStyle? listTextStyle;
 
   /// Padding for the input element.
   final EdgeInsets? padding;
 
-  /// Mutiple selection dropdown for List of Maps.
+  /// Multiple selection dropdown for List of Maps.
   const MultiSelectDropdown({
     super.key,
     required this.list,
@@ -106,11 +109,12 @@ class MultiSelectDropdown extends StatefulWidget {
     this.duration = const Duration(milliseconds: 300),
     this.checkboxFillColor,
     this.splashColor,
+    this.backgroundColor,
     this.listTextStyle,
     this.padding,
   }) : isSimpleList = false;
 
-  /// Mutiple selection dropdown for simple List.
+  /// Multiple selection dropdown for simple List.
   const MultiSelectDropdown.simpleList({
     super.key,
     required this.list,
@@ -127,6 +131,7 @@ class MultiSelectDropdown extends StatefulWidget {
     this.duration = const Duration(milliseconds: 300),
     this.checkboxFillColor,
     this.splashColor,
+    this.backgroundColor,
     this.listTextStyle,
     this.padding,
   })  : label = '',
@@ -388,6 +393,9 @@ class _MultiSelectDropdownState extends State<MultiSelectDropdown> {
             style: MenuStyle(
               fixedSize: MaterialStateProperty.resolveWith((states) {
                 return Size(modalWidth, modalHeight);
+              }),
+              backgroundColor: MaterialStateProperty.resolveWith((states) {
+                return widget.backgroundColor;
               }),
               padding: MaterialStateProperty.resolveWith((states) {
                 return EdgeInsets.zero;
